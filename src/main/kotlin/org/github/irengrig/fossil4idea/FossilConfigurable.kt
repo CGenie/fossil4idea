@@ -5,9 +5,9 @@ import com.intellij.openapi.options.Configurable
 import com.intellij.openapi.options.ConfigurationException
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.TextFieldWithBrowseButton
-import com.intellij.openapi.util.Comparing
 import org.jetbrains.annotations.Nls
 import java.awt.BorderLayout
+import java.util.*
 import javax.swing.BoxLayout
 import javax.swing.JComponent
 import javax.swing.JLabel
@@ -58,9 +58,13 @@ class FossilConfigurable(private val myProject: Project) : Configurable {
     }
 
     override fun isModified(): Boolean {
-        return !Comparing.equal<String>(
+        return !Objects.equals(
             FossilConfiguration.getInstance(myProject).FOSSIL_PATH,
-            myCommandLine!!.text.trim { it <= ' ' })
+            myCommandLine!!.text.trim { it <= ' ' }
+        )
+//        return !Comparing.equal<String>(
+//            FossilConfiguration.getInstance(myProject).FOSSIL_PATH,
+//            myCommandLine!!.text.trim { it <= ' ' })
     }
 
     @Throws(ConfigurationException::class)

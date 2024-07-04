@@ -25,6 +25,9 @@
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
+        <projectService serviceImplementation="org.github.irengrig.fossil4idea.FossilConfiguration" />
+        <checkoutProvider implementation="org.github.irengrig.fossil4idea.checkout.FossilCheckoutProvider"/>
+        <vcs id="fossil" displayName="Fossil" vcsClass="org.github.irengrig.fossil4idea.FossilVcs" name="fossil"/>
         <!-- copy paste from: https://github.com/JetBrains/intellij-community/blob/master/plugins/svn4idea/src/META-INF/plugin.xml -->
 <!--
     <registryKey key="svn.use.incoming.optimization" defaultValue="false"
@@ -81,30 +84,4 @@
     <notificationGroup id="Svn Roots Detection Errors" displayType="STICKY_BALLOON" bundle="messages.SvnBundle" key="notification.group.svn.roots"/>
 -->
     </extensions>
-
-    <actions>
-        <action
-                id="StackOverflow.AskQuestion.ToolsMenu"
-                class="org.github.irengrig.fossil4idea.actions.AskQuestionAction"
-                text="Ask Question on Stack Overflow"
-                description="Ask a Question on Stack Overflow">
-            <add-to-group group-id="ToolsMenu" anchor="last"/>
-        </action>
-        <!--
-        <action
-                id="StackOverflow.Search.Editor"
-                class="ht.sr.cgenie.fossil4idea2.SearchAction"
-                text="Search on Stack Overflow"
-                description="Search on Stack Overflow">
-            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
-        </action>
-        <action
-                id="StackOverflow.Search.Console"
-                class="ht.sr.cgenie.fossil4idea2.SearchAction"
-                text="Search on Stack Overflow"
-                description="Search on Stack Overflow">
-            <add-to-group group-id="ConsoleEditorPopupMenu" anchor="last"/>
-        </action>
-        -->
-    </actions>
 </idea-plugin>

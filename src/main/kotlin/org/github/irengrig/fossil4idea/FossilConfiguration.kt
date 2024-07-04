@@ -2,7 +2,7 @@ package org.github.irengrig.fossil4idea
 
 import com.intellij.openapi.components.*
 import com.intellij.openapi.project.Project
-import org.jdom.Element
+import org.github.irengrig.fossil4idea.fossil.FossilConfigurationState
 import java.io.File
 
 /**
@@ -12,21 +12,17 @@ import java.io.File
  * Time: 12:04 PM
  */
 @State(name = "FossilConfiguration", storages = [Storage(StoragePathMacros.WORKSPACE_FILE)])
-abstract class FossilConfiguration : PersistentStateComponent<Element?> {
+abstract class FossilConfiguration : PersistentStateComponent<FossilConfigurationState> {
     var FOSSIL_PATH: String = ""
     private val myRemoteUrls: MutableMap<File, String> = HashMap()
+    private var myState = FossilConfigurationState()
 
-    override fun getState(): Element? {
-        val element = Element("state")
-        element.setAttribute("FOSSIL_PATH", FOSSIL_PATH)
-        return element
+    override fun getState(): FossilConfigurationState {
+        return this.myState
     }
 
-    fun loadState(element: Element?) {
-        val fossilPath = element!!.getAttribute("FOSSIL_PATH")
-        if (fossilPath != null) {
-            FOSSIL_PATH = fossilPath.value
-        }
+    override fun loadState(state: FossilConfigurationState) {
+        this.myState = state
     }
 
     var remoteUrls: Map<File, String>
@@ -37,9 +33,14 @@ abstract class FossilConfiguration : PersistentStateComponent<Element?> {
         }
 
     companion object {
-        fun getInstance(project: Project?): FossilConfiguration {
-            // return project.getService(FossilConfiguration::class.java)
-            return ServiceManager.getService(project!!, FossilConfiguration::class.java)
+        fun getInstance(project: Project): FossilConfiguration {
+            return project.getService(FossilConfiguration::class.java)
         }
     }
+//    companion object {
+//        fun getInstance(project: Project?): FossilConfiguration {
+//            // return project.getService(FossilConfiguration::class.java)
+//            return ServiceManager.getService(project!!, FossilConfiguration::class.java)
+//        }
+//    }
 }

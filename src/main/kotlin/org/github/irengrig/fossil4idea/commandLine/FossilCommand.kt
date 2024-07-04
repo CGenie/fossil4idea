@@ -38,7 +38,7 @@ abstract class FossilCommand(protected val myProject: Project, workingDirectory:
         val configuration = FossilConfiguration.getInstance(myProject)
         val path = if (StringUtil.isEmptyOrSpaces(configuration.FOSSIL_PATH)) "fossil" else configuration.FOSSIL_PATH
         myCommandLine.exePath = path
-        myCommandLine.setWorkDirectory(workingDirectory)
+        myCommandLine.workDirectory = workingDirectory
         myCommandLine.addParameter(commandName.name)
     }
 

@@ -5,4 +5,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = "fossil4idea2"
+rootProject.name = "fossil4idea"
